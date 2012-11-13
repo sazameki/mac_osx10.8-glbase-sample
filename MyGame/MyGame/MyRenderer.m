@@ -67,7 +67,7 @@ GLfloat gVertexData2[] = {
 
 @implementation MyRenderer
 
-- (id)init
+- (id)initWithSize:(NSSize)size scale:(float)scale
 {
     self = [super init];
     if (self) {
@@ -99,12 +99,12 @@ GLfloat gVertexData2[] = {
         [vao2 setVertexCount:6];
         [vao2 unbind];
 
-        fbo = [[GMFrameBufferObject alloc] init];
+        fbo = [[GMFrameBufferObject alloc] initWithSize:NSMakeSize(size.width * scale, size.height * scale)];
     }
     return self;
 }
 
-- (void)drawPath1:(NSSize)viewSize
+- (void)drawPath1:(NSSize)viewSize scale:(float)scale
 {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
@@ -112,6 +112,8 @@ GLfloat gVertexData2[] = {
 
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glViewport(0.0, 0.0, viewSize.width, viewSize.height);
 
     GLKMatrix4 projMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0), viewSize.width/viewSize.height, 0.0001, 100000.0);
     GLKMatrix4 viewMatrix = GLKMatrix4MakeLookAt(cos(0) * 1.7, 0.0, sin(0) * 1.7,
@@ -140,7 +142,7 @@ GLfloat gVertexData2[] = {
     [vao draw];
 }
 
-- (void)drawPath2:(NSSize)viewSize
+- (void)drawPath2:(NSSize)viewSize scale:(float)scale
 {
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
@@ -149,6 +151,8 @@ GLfloat gVertexData2[] = {
     effect2.texture2d0.name = fbo.colorTex;
 
     effect2.transform.projectionMatrix = GLKMatrix4MakeOrtho(0.0, 1.0, 0.0, 1.0, -100.0, 100.0);
+
+    glViewport(0, 0, viewSize.width * scale, viewSize.height * scale);
 
     [vao2 bind];
 
@@ -174,15 +178,15 @@ GLfloat gVertexData2[] = {
     [vao2 draw];
 }
 
-- (void)drawView:(NSSize)viewSize
+- (void)drawView:(NSSize)viewSize scale:(float)scale
 {
     // オフスクリーンレンダリング（FBOへの描画）
     [fbo bind];
-    [self drawPath1:viewSize];
+    [self drawPath1:viewSize scale:scale];
 
     // オンスクリーンレンダリング
     [GMFrameBufferObject unbind];
-    [self drawPath2:viewSize];
+    [self drawPath2:viewSize scale:scale];
 }
 
 - (void)updateModel:(double)deltaTime

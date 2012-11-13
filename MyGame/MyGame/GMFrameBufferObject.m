@@ -16,7 +16,7 @@
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-- (id)init
+- (id)initWithSize:(NSSize)size
 {
     self = [super init];
     if (self) {
@@ -33,7 +33,7 @@
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
         glTexImage2D(GL_TEXTURE_2D, 0,
                      GL_RGBA,       // internal format (GL_RGB, GL_RGBA, GL_RED, GL_RG)
-                     640, 480,      // size
+                     size.width, size.height,      // size
                      0,             // border (must be 0)
                      GL_RGBA,       // format (GL_RED, GL_RG, GL_RGB, GL_BGR, GL_RGBA, and GL_BGRA)
                      GL_UNSIGNED_BYTE,
@@ -49,10 +49,10 @@
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
         glTexImage2D(GL_TEXTURE_2D, 0,
                      GL_DEPTH_COMPONENT,
-                     640, 480,      // size
+                     size.width, size.height,      // size
                      0,             // border (must be 0)
                      GL_DEPTH_COMPONENT,
-                     GL_UNSIGNED_SHORT,
+                     GL_FLOAT,
                      NULL);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTex, 0);
 

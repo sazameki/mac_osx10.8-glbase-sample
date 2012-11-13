@@ -80,7 +80,7 @@ static double GetCurrentTime()
         [self setWantsBestResolutionOpenGLSurface:YES];
 
         // ビューサイズの取得
-        viewFrame = [self convertRectToBacking:frame];
+        viewFrame = frame;
     }
     return self;
 }
@@ -99,7 +99,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
         // ビューの描画（TODO: 1フレーム遅れの描画実行）
         CGLLockContext(cglContext);
         CGLSetCurrentContext(cglContext);
-        [renderer drawView:viewFrame.size];
+        [renderer drawView:viewFrame.size scale:[[glView window] screen].backingScaleFactor];
         CGLFlushDrawable(cglContext);
         CGLUnlockContext(cglContext);
 
@@ -128,7 +128,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
     viewFrame = [self frame];
 
     // ゲームの作成
-    _renderer = [[MyRenderer alloc] init];
+    _renderer = [[MyRenderer alloc] initWithSize:viewFrame.size
+                                           scale:[[self window] screen].backingScaleFactor];
 
     // ディスプレイリンクの作成
     CVDisplayLinkCreateWithActiveCGDisplays(&displayLink);
@@ -142,7 +143,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
     CGLLockContext(cglContext);
     CGLSetCurrentContext(cglContext);
 
-    [_renderer drawView:viewFrame.size];
+    [_renderer drawView:viewFrame.size scale:[[self window] screen].backingScaleFactor];
 
     CGLFlushDrawable(cglContext);
     CGLUnlockContext(cglContext);

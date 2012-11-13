@@ -17,6 +17,8 @@
 
 + (void)unbind;
 
+- (id)initWithSize:(NSSize)size;
+
 - (void)bind;
 
 - (GLuint)colorTex;
