@@ -16,7 +16,7 @@
 {
     self = [super init];
     if (self) {
-        [self loadShadersWithName:@"GMBaseEffect"];
+        [self loadShadersWithName:@"GMBaseEffectShader"];
 
         _transform = [[GLKEffectPropertyTransform alloc] init];
         _light0 = [[GLKEffectPropertyLight alloc] init];
