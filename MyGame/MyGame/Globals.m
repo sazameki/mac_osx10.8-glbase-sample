@@ -1,5 +1,5 @@
 //
-//  Globals.mm
+//  Globals.m
 //  MyGame
 //
 //  Created by numata on 2012/11/13.

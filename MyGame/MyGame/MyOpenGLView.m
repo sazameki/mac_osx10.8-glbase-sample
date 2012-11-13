@@ -1,5 +1,5 @@
 //
-//  MyOpenGLView.mm
+//  MyOpenGLView.m
 //  MyGame
 //
 //  Created by numata on 2012/11/13.
@@ -20,7 +20,7 @@ static NSRect               viewFrame;
 
 static double GetCurrentTime()
 {
-    static timeval tv;
+    static struct timeval tv;
     gettimeofday(&tv, NULL);
     return (double)tv.tv_sec + (double)tv.tv_usec / 1000000.0;
 }
