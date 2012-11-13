@@ -1,7 +1,9 @@
+#version 150
+
 ///// Attribute Variables
-attribute vec3 a_position;
-attribute vec2 a_texture_coord;
-attribute vec3 a_normal;
+in vec3 a_position;
+in vec2 a_texture_coord;
+in vec3 a_normal;
 
 ///// Uniform Variables
 uniform mat4    u_mvp_matrix;
@@ -12,8 +14,8 @@ uniform vec4    u_light0_position;
 uniform vec4    u_light0_diffuse_color;
 
 ///// Varying Variables
-varying vec4    v_color;
-varying vec2    v_texture_coord;
+out vec4    v_color;
+out vec2    v_texture_coord;
 
 
 void main()

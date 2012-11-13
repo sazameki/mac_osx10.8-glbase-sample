@@ -19,6 +19,9 @@ extern volatile bool    gIsAppFinished;
 // Use MSAA (0/1)
 #define GM_USES_MSAA                1
 
+// Sample Size (1/2/4/8/9/16)
+#define GM_SAMPLE_SIZE              4
+
 // Use Super-Sampling (0/1)
 #define GM_USES_MSAA_SUPERSAMPLE    0
 

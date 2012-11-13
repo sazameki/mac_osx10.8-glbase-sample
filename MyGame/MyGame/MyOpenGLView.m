@@ -13,7 +13,6 @@
 
 
 static double               prevTime;
-static CGLPixelFormatObj    cglPixelFormat;
 static CGLContextObj        cglContext;
 static NSRect               viewFrame;
 
@@ -45,7 +44,6 @@ static double GetCurrentTime()
 - (id)initWithFrame:(NSRect)frame
 {
     NSOpenGLPixelFormatAttribute attrs[] = {
-        NSOpenGLPFAWindow,
         NSOpenGLPFAAccelerated,
         NSOpenGLPFADoubleBuffer,
         NSOpenGLPFANoRecovery,
@@ -53,10 +51,12 @@ static double GetCurrentTime()
         NSOpenGLPFAAlphaSize, (NSOpenGLPixelFormatAttribute)GM_ALPHA_BUFFER_SIZE,
         NSOpenGLPFADepthSize, (NSOpenGLPixelFormatAttribute)GM_DEPTH_BUFFER_SIZE,
 
+        NSOpenGLPFAOpenGLProfile, NSOpenGLProfileVersion3_2Core,
+
 #if GM_USES_MSAA
         NSOpenGLPFAMultisample,
         NSOpenGLPFASampleBuffers, (NSOpenGLPixelFormatAttribute)1,
-        NSOpenGLPFASamples, (NSOpenGLPixelFormatAttribute)4,
+        NSOpenGLPFASamples, (NSOpenGLPixelFormatAttribute)GM_SAMPLE_SIZE,
 #endif  //#if GM_USES_MSAA
 
 #if GM_USES_MSAA_SUPERSAMPLE
@@ -76,8 +76,10 @@ static double GetCurrentTime()
 
     self = [super initWithFrame:frame pixelFormat:pixelFormat];
     if (self) {
+        // 高解像度ディスプレイへの対処
         [self setWantsBestResolutionOpenGLSurface:YES];
 
+        // ビューサイズの取得
         viewFrame = [self convertRectToBacking:frame];
     }
     return self;
@@ -94,17 +96,18 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
         MyOpenGLView* glView = (__bridge MyOpenGLView*)displayLinkContext;
         MyRenderer* renderer = glView.renderer;
 
+        // ビューの描画（TODO: 1フレーム遅れの描画実行）
         CGLLockContext(cglContext);
         CGLSetCurrentContext(cglContext);
         [renderer drawView:viewFrame.size];
         CGLFlushDrawable(cglContext);
+        CGLUnlockContext(cglContext);
 
+        // モデルの更新
         double time = GetCurrentTime();
         double deltaTime = time - prevTime;
         [renderer updateModel:deltaTime];
         prevTime = time;
-
-        CGLUnlockContext(cglContext);
 
         return kCVReturnSuccess;
     }
@@ -112,8 +115,11 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
 
 - (void)prepareOpenGL
 {
+    [[self openGLContext] makeCurrentContext];
+
+    // CGLコンテキストの取得
     cglContext = (CGLContextObj)[self openGLContext].CGLContextObj;
-    cglPixelFormat = (CGLPixelFormatObj)[self pixelFormat].CGLPixelFormatObj;
+    CGLPixelFormatObj cglPixelFormat = (CGLPixelFormatObj)[self pixelFormat].CGLPixelFormatObj;
 
     // 最初の時間の取得
     prevTime = GetCurrentTime();

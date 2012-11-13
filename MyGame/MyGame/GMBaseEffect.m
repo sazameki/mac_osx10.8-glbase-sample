@@ -66,8 +66,8 @@
 - (void)bindAttribLocations
 {
     glBindAttribLocation(program, GMBaseEffect_attrib_position, "a_position");
-    glBindAttribLocation(program, GMBaseEffect_attrib_tex_coord0, "a_texture_coord");
     glBindAttribLocation(program, GMBaseEffect_attrib_normal, "a_normal");
+    glBindAttribLocation(program, GMBaseEffect_attrib_tex_coord0, "a_texture_coord");
 }
 
 - (void)configureUniformLocations
@@ -81,9 +81,6 @@
 
     uniforms[GMBaseEffect_uniform_texture0] = glGetUniformLocation(program, "u_texture0");
     uniforms[GMBaseEffect_uniform_texture0_enabled] = glGetUniformLocation(program, "u_texture0_enabled");
-
-    uniforms[GMBaseEffect_uniform_texture1] = glGetUniformLocation(program, "u_texture1");
-    uniforms[GMBaseEffect_uniform_texture1_enabled] = glGetUniformLocation(program, "u_texture1_enabled");
 }
 
 @end

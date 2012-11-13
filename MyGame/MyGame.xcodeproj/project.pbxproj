@@ -25,6 +25,11 @@
 		8E51093316519CF6006494AD /* GMBaseEffectShader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 8E51092F16519CE7006494AD /* GMBaseEffectShader.vsh */; };
 		8E51096616522770006494AD /* MyRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E51096516522770006494AD /* MyRenderer.m */; };
 		8E51096916522E46006494AD /* block.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E51096816522E46006494AD /* block.png */; };
+		8EFB5FA716528FA700914931 /* GMFrameBufferObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EFB5FA616528FA700914931 /* GMFrameBufferObject.m */; };
+		8EFB5FAC16529ABA00914931 /* GMVertexArrayObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EFB5FAB16529ABA00914931 /* GMVertexArrayObject.m */; };
+		8EFB5FB31652A2FB00914931 /* MyPath2Effect.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EFB5FB21652A2FB00914931 /* MyPath2Effect.m */; };
+		8EFB5FB41652A3B300914931 /* path2_shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 8EFB5FAD1652A2C900914931 /* path2_shader.vsh */; };
+		8EFB5FB51652A3B600914931 /* path2_shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 8EFB5FAF1652A2D500914931 /* path2_shader.fsh */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +62,14 @@
 		8E51096416522770006494AD /* MyRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRenderer.h; sourceTree = "<group>"; };
 		8E51096516522770006494AD /* MyRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRenderer.m; sourceTree = "<group>"; };
 		8E51096816522E46006494AD /* block.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block.png; sourceTree = "<group>"; };
+		8EFB5FA516528FA700914931 /* GMFrameBufferObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMFrameBufferObject.h; sourceTree = "<group>"; };
+		8EFB5FA616528FA700914931 /* GMFrameBufferObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMFrameBufferObject.m; sourceTree = "<group>"; };
+		8EFB5FAA16529AB900914931 /* GMVertexArrayObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMVertexArrayObject.h; sourceTree = "<group>"; };
+		8EFB5FAB16529ABA00914931 /* GMVertexArrayObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMVertexArrayObject.m; sourceTree = "<group>"; };
+		8EFB5FAD1652A2C900914931 /* path2_shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = path2_shader.vsh; sourceTree = "<group>"; };
+		8EFB5FAF1652A2D500914931 /* path2_shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = path2_shader.fsh; sourceTree = "<group>"; };
+		8EFB5FB11652A2FB00914931 /* MyPath2Effect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPath2Effect.h; sourceTree = "<group>"; };
+		8EFB5FB21652A2FB00914931 /* MyPath2Effect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPath2Effect.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +127,8 @@
 				8E5108C81651694D006494AD /* Globals.m */,
 				8E51096416522770006494AD /* MyRenderer.h */,
 				8E51096516522770006494AD /* MyRenderer.m */,
+				8EFB5FB11652A2FB00914931 /* MyPath2Effect.h */,
+				8EFB5FB21652A2FB00914931 /* MyPath2Effect.m */,
 				8E5108A716515D24006494AD /* MyAppDelegate.h */,
 				8E5108A816515D24006494AD /* MyAppDelegate.m */,
 				8E5108BB165162B7006494AD /* MyOpenGLView.h */,
@@ -122,6 +137,10 @@
 				8E51092C16519BEB006494AD /* GMEffect.m */,
 				8E51093A1651B0B6006494AD /* GMBaseEffect.h */,
 				8E51092816519BB9006494AD /* GMBaseEffect.m */,
+				8EFB5FA516528FA700914931 /* GMFrameBufferObject.h */,
+				8EFB5FA616528FA700914931 /* GMFrameBufferObject.m */,
+				8EFB5FAA16529AB900914931 /* GMVertexArrayObject.h */,
+				8EFB5FAB16529ABA00914931 /* GMVertexArrayObject.m */,
 				8E51089C16515D24006494AD /* Supporting Files */,
 			);
 			path = MyGame;
@@ -145,6 +164,8 @@
 			children = (
 				8E51092F16519CE7006494AD /* GMBaseEffectShader.vsh */,
 				8E51092E16519CE7006494AD /* GMBaseEffectShader.fsh */,
+				8EFB5FAD1652A2C900914931 /* path2_shader.vsh */,
+				8EFB5FAF1652A2D500914931 /* path2_shader.fsh */,
 				8E51096816522E46006494AD /* block.png */,
 			);
 			name = Resources;
@@ -208,6 +229,8 @@
 				8E5108AC16515D25006494AD /* MainMenu.xib in Resources */,
 				8E51093316519CF6006494AD /* GMBaseEffectShader.vsh in Resources */,
 				8E51093216519CF3006494AD /* GMBaseEffectShader.fsh in Resources */,
+				8EFB5FB41652A3B300914931 /* path2_shader.vsh in Resources */,
+				8EFB5FB51652A3B600914931 /* path2_shader.fsh in Resources */,
 				8E51096916522E46006494AD /* block.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -226,6 +249,9 @@
 				8E51092B16519BDA006494AD /* GMBaseEffect.m in Sources */,
 				8E51092D16519BEB006494AD /* GMEffect.m in Sources */,
 				8E51096616522770006494AD /* MyRenderer.m in Sources */,
+				8EFB5FA716528FA700914931 /* GMFrameBufferObject.m in Sources */,
+				8EFB5FAC16529ABA00914931 /* GMVertexArrayObject.m in Sources */,
+				8EFB5FB31652A2FB00914931 /* MyPath2Effect.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

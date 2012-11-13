@@ -25,8 +25,6 @@ enum {
     GMBaseEffect_uniform_light0_diffuse_color,
     GMBaseEffect_uniform_texture0,
     GMBaseEffect_uniform_texture0_enabled,
-    GMBaseEffect_uniform_texture1,
-    GMBaseEffect_uniform_texture1_enabled,
     GMBaseEffect_uniform_count
 };
 
