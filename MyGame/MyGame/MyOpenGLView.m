@@ -98,7 +98,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
         MyOpenGLView* glView = (__bridge MyOpenGLView*)displayLinkContext;
         MyRenderer* renderer = glView.renderer;
 
-        // ビューの描画（TODO: 1フレーム遅れの描画実行）
+        // ビューの描画
         CGLLockContext(cglContext);
         CGLSetCurrentContext(cglContext);
         if (isFullScreen) {
