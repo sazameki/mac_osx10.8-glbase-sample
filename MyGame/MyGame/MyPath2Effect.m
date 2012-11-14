@@ -44,6 +44,10 @@
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(_texture2d0.target, _texture2d0.name);
+
+    glUniform1i(uniforms[MyPath2Effect_uniform_mode], _mode);
+    glUniform1f(uniforms[MyPath2Effect_uniform_depth_nearz], _depthNearZ);
+    glUniform1f(uniforms[MyPath2Effect_uniform_depth_farz], _depthFarZ);
 }
 
 - (void)bindAttribLocations
@@ -56,6 +60,9 @@
 {
     uniforms[MyPath2Effect_uniform_mvp_matrix] = glGetUniformLocation(program, "u_mvp_matrix");
     uniforms[MyPath2Effect_uniform_texture0] = glGetUniformLocation(program, "u_texture0");
+    uniforms[MyPath2Effect_uniform_mode] = glGetUniformLocation(program, "u_mode");
+    uniforms[MyPath2Effect_uniform_depth_nearz] = glGetUniformLocation(program, "u_depth_nearz");
+    uniforms[MyPath2Effect_uniform_depth_farz] = glGetUniformLocation(program, "u_depth_farz");
 }
 
 @end

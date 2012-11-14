@@ -17,6 +17,9 @@ enum {
 enum {
     MyPath2Effect_uniform_mvp_matrix,
     MyPath2Effect_uniform_texture0,
+    MyPath2Effect_uniform_mode,
+    MyPath2Effect_uniform_depth_nearz,
+    MyPath2Effect_uniform_depth_farz,
     MyPath2Effect_uniform_count
 };
 
@@ -25,8 +28,11 @@ enum {
     GLint uniforms[MyPath2Effect_uniform_count];
 }
 
-@property (nonatomic, readonly)        GLKEffectPropertyTransform          *transform;
-@property (nonatomic, readonly)        GLKEffectPropertyTexture            *texture2d0;
+@property(nonatomic, readonly)  GLKEffectPropertyTransform          *transform;
+@property(nonatomic, readonly)  GLKEffectPropertyTexture            *texture2d0;
+@property(nonatomic, readwrite) int mode;
+@property(nonatomic, readwrite) float depthNearZ;
+@property(nonatomic, readwrite) float depthFarZ;
 
 - (void)updateUniformValues;
 - (void)bindAttribLocations;

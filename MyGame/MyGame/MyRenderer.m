@@ -115,14 +115,15 @@ GLfloat gVertexData2[] = {
 
     glViewport(0.0, 0.0, viewSize.width, viewSize.height);
 
-    GLKMatrix4 projMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0), viewSize.width/viewSize.height, 0.0001, 100000.0);
-    GLKMatrix4 viewMatrix = GLKMatrix4MakeLookAt(cos(0) * 1.7, 0.0, sin(0) * 1.7,
+    GLKMatrix4 projMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0), viewSize.width/viewSize.height, 0.001, 1000.0);
+    GLKMatrix4 viewMatrix = GLKMatrix4MakeLookAt(cos(angle) * 1.7, 2.0, sin(angle) * 1.7,
                                                  0.0, 0.0, 0.0,
                                                  0.0, 1.0, 0.0);
 
     GLKMatrix4 modelMatrix = GLKMatrix4Identity;
     modelMatrix = GLKMatrix4Translate(modelMatrix, -0.5, -0.5, -0.5);
-    modelMatrix = GLKMatrix4Rotate(modelMatrix, angle, 1.0, 1.0, 1.0);
+    modelMatrix = GLKMatrix4Scale(modelMatrix, 1.5, 1.5, 1.5);
+    //modelMatrix = GLKMatrix4Rotate(modelMatrix, angle, 0.0, 1.0, 0.0);
 
     effect.transform.projectionMatrix = projMatrix;
     effect.transform.modelviewMatrix = GLKMatrix4Multiply(viewMatrix, modelMatrix);
@@ -147,8 +148,8 @@ GLfloat gVertexData2[] = {
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
 
+    //effect2.texture2d0.name = fbo.colorTex;
     effect2.texture2d0.target = GL_TEXTURE_2D;
-    effect2.texture2d0.name = fbo.colorTex;
 
     effect2.transform.projectionMatrix = GLKMatrix4MakeOrtho(0.0, 1.0, 0.0, 1.0, -100.0, 100.0);
 
@@ -158,22 +159,32 @@ GLfloat gVertexData2[] = {
 
     GLKMatrix4 modelMatrix = GLKMatrix4Identity;
     modelMatrix = GLKMatrix4Scale(modelMatrix, 0.5, 0.5, 1.0);
+
     effect2.transform.modelviewMatrix = modelMatrix;
+    effect2.texture2d0.name = fbo.depthTex;
+    effect2.mode = 0;
+    effect2.depthNearZ = 0.001;
+    effect2.depthFarZ = 1000.0;
     [effect2 prepareToDraw];
     [vao2 draw];
 
     modelMatrix = GLKMatrix4Translate(modelMatrix, 1.0, 0.0, 0.0);
     effect2.transform.modelviewMatrix = modelMatrix;
+    effect2.texture2d0.name = fbo.colorTex;
+    effect2.mode = 1;
     [effect2 prepareToDraw];
     [vao2 draw];
 
-    modelMatrix = GLKMatrix4Translate(modelMatrix, 0.0, 1.0, 0.0);
+    modelMatrix = GLKMatrix4Translate(modelMatrix, -1.0, 1.0, 0.0);
     effect2.transform.modelviewMatrix = modelMatrix;
+    effect2.texture2d0.name = fbo.colorTex;
+    effect2.mode = 2;
     [effect2 prepareToDraw];
     [vao2 draw];
 
-    modelMatrix = GLKMatrix4Translate(modelMatrix, -1.0, 0.0, 0.0);
+    modelMatrix = GLKMatrix4Translate(modelMatrix, 1.0, 0.0, 0.0);
     effect2.transform.modelviewMatrix = modelMatrix;
+    effect2.mode = 3;
     [effect2 prepareToDraw];
     [vao2 draw];
 }
