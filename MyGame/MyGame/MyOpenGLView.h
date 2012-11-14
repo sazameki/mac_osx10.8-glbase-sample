@@ -12,6 +12,12 @@
 
 @interface MyOpenGLView : NSOpenGLView
 
+- (void)willUseFullScreenWithSize:(NSSize)size;
+- (void)willEnterFullScreen;
+- (void)didEnterFullScreen;
+- (void)willExitFullScreen;
+- (void)didExitFullScreen;
+
 - (void)stopGame;
 
 @end

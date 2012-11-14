@@ -12,6 +12,9 @@
 
 extern volatile bool    gIsAppFinished;
 
+#define SCREEN_SIZE_X   640
+#define SCREEN_SIZE_Y   480
+
 #define GM_COLOR_BUFFER_SIZE        32
 #define GM_ALPHA_BUFFER_SIZE        8
 #define GM_DEPTH_BUFFER_SIZE        24

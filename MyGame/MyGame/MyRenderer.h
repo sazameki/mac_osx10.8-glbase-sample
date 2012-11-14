@@ -26,7 +26,7 @@
 
 - (id)initWithSize:(NSSize)size scale:(float)scale;
 
-- (void)drawView:(NSSize)viewSize scale:(float)scale;
+- (void)drawView:(NSSize)viewSize screenSize:(NSSize)screenSize scale:(float)scale;
 - (void)updateModel:(double)deltaTime;
 
 @end

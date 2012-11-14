@@ -15,6 +15,8 @@
 static double               prevTime;
 static CGLContextObj        cglContext;
 static NSRect               viewFrame;
+static NSSize               fullScreenSize;
+static BOOL                 isFullScreen = NO;
 
 
 static double GetCurrentTime()
@@ -99,7 +101,15 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
         // ビューの描画（TODO: 1フレーム遅れの描画実行）
         CGLLockContext(cglContext);
         CGLSetCurrentContext(cglContext);
-        [renderer drawView:viewFrame.size scale:[[glView window] screen].backingScaleFactor];
+        if (isFullScreen) {
+            [renderer drawView:fullScreenSize
+                    screenSize:viewFrame.size
+                         scale:[[glView window] screen].backingScaleFactor];
+        } else {
+            [renderer drawView:viewFrame.size
+                    screenSize:viewFrame.size
+                         scale:[[glView window] screen].backingScaleFactor];
+        }
         CGLFlushDrawable(cglContext);
         CGLUnlockContext(cglContext);
 
@@ -143,10 +153,43 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
     CGLLockContext(cglContext);
     CGLSetCurrentContext(cglContext);
 
-    [_renderer drawView:viewFrame.size scale:[[self window] screen].backingScaleFactor];
+    if (isFullScreen) {
+        [_renderer drawView:fullScreenSize screenSize:viewFrame.size scale:[[self window] screen].backingScaleFactor];
+    } else {
+        [_renderer drawView:viewFrame.size screenSize:viewFrame.size scale:[[self window] screen].backingScaleFactor];
+    }
 
     CGLFlushDrawable(cglContext);
     CGLUnlockContext(cglContext);
+}
+
+- (void)willUseFullScreenWithSize:(NSSize)size
+{
+    fullScreenSize = size;
+}
+
+- (void)willEnterFullScreen
+{
+    isFullScreen = YES;
+    CVDisplayLinkStop(displayLink);
+}
+
+- (void)didEnterFullScreen
+{
+    prevTime = GetCurrentTime();
+    CVDisplayLinkStart(displayLink);
+}
+
+- (void)willExitFullScreen
+{
+    isFullScreen = NO;
+    CVDisplayLinkStop(displayLink);
+}
+
+- (void)didExitFullScreen
+{
+    prevTime = GetCurrentTime();
+    CVDisplayLinkStart(displayLink);
 }
 
 - (void)stopGame

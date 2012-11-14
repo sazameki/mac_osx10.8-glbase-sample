@@ -104,7 +104,14 @@ GLfloat gVertexData2[] = {
     return self;
 }
 
-- (void)drawPath1:(NSSize)viewSize scale:(float)scale
+/*
+    @method     drawPath1:screenSize:scale
+    @abstract   （パス1）FBOへの描画を行います。
+    @param viewSize     ビューの大きさ（フルスクリーン時に変化する）
+    @param screenSize   ゲーム画面の大きさ（固定）
+    @param scale        通常解像度の時は1.0、Retina画面使用時は2.0
+ */
+- (void)drawPath1:(NSSize)viewSize screenSize:(NSSize)screenSize scale:(float)scale
 {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
@@ -113,7 +120,9 @@ GLfloat gVertexData2[] = {
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glViewport(0.0, 0.0, viewSize.width, viewSize.height);
+    // FBOへの描画時にはスケーリングしない（画面への直接描画時にはスケーリング必要）
+    //glViewport(0.0, 0.0, screenSize.width * scale, screenSize.height * scale);
+    glViewport(0.0, 0.0, screenSize.width, screenSize.height);
 
     GLKMatrix4 projMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0), viewSize.width/viewSize.height, 0.001, 1000.0);
     GLKMatrix4 viewMatrix = GLKMatrix4MakeLookAt(cos(angle) * 1.7, 2.0, sin(angle) * 1.7,
@@ -143,17 +152,24 @@ GLfloat gVertexData2[] = {
     [vao draw];
 }
 
-- (void)drawPath2:(NSSize)viewSize scale:(float)scale
+/*
+    @method     drawPath2:screenSize:scale
+    @abstract   （パス2）画面への直接描画を行います。
+    @param viewSize     ビューの大きさ（フルスクリーン時に変化する）
+    @param screenSize   ゲーム画面の大きさ（固定）
+    @param scale        通常解像度の時は1.0、Retina画面使用時は2.0
+ */
+- (void)drawPath2:(NSSize)viewSize screenSize:(NSSize)screenSize scale:(float)scale
 {
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
 
-    //effect2.texture2d0.name = fbo.colorTex;
     effect2.texture2d0.target = GL_TEXTURE_2D;
 
     effect2.transform.projectionMatrix = GLKMatrix4MakeOrtho(0.0, 1.0, 0.0, 1.0, -100.0, 100.0);
 
-    glViewport(0, 0, viewSize.width * scale, viewSize.height * scale);
+    // FBOでない画面への直接描画時にはスケーリングする
+    glViewport(0.0, 0.0, viewSize.width * scale, viewSize.height * scale);
 
     [vao2 bind];
 
@@ -189,15 +205,22 @@ GLfloat gVertexData2[] = {
     [vao2 draw];
 }
 
-- (void)drawView:(NSSize)viewSize scale:(float)scale
+/*
+    @method     drawView:screenSize:scale
+    @abstract   画面の描画を行います。
+    @param viewSize     ビューの大きさ（フルスクリーン時に変化する）
+    @param screenSize   ゲーム画面の大きさ（固定）
+    @param scale        通常解像度の時は1.0、Retina画面使用時は2.0
+ */
+- (void)drawView:(NSSize)viewSize screenSize:(NSSize)screenSize scale:(float)scale
 {
     // オフスクリーンレンダリング（FBOへの描画）
     [fbo bind];
-    [self drawPath1:viewSize scale:scale];
+    [self drawPath1:viewSize screenSize:screenSize scale:scale];
 
     // オンスクリーンレンダリング
     [GMFrameBufferObject unbind];
-    [self drawPath2:viewSize scale:scale];
+    [self drawPath2:viewSize screenSize:screenSize scale:scale];
 }
 
 - (void)updateModel:(double)deltaTime
